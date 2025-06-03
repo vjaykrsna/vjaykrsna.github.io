@@ -1,0 +1,252 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #292F36;
+    color: #F7FFF7;
+}
+
+header h1 {
+    text-align: center;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 48px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: #4ECDC4;
+    font-family: 'Arial Black', sans-serif;
+}
+
+main {
+    padding: 10px;
+}
+
+/* Game Board */
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.btn {
+    width: 30%;
+    aspect-ratio: 1/1;
+    background-color: #FFE66D;
+    font-size: 3rem;
+    color: #292F36;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.btn:hover {
+    background-color: #FFD700;
+}
+
+.btn.move-highlight {
+    background-color: #4ECDC4;
+    box-shadow: 0 0 15px #4ECDC4;
+}
+
+/* Turn Indicator */
+#turn-indicator {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 15px auto;
+    color: #F7FFF7;
+    font-weight: bold;
+    width: 90%;
+    max-width: 400px;
+}
+
+@keyframes shuffle {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+#turn-indicator.thinking {
+    animation: shuffle 0.5s infinite alternate;
+}
+
+/* Score Board */
+.score-board {
+    width: 90%;
+    max-width: 400px;
+    min-height: 70px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #4ECDC4;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.score-board > p {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.scores-wrapper {
+    display: contents;
+}
+
+#user,
+#comp {
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#user-score,
+#comp-score {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.score-text {
+    font-size: 1.2rem;
+    color: #F7FFF7;
+}
+
+/* Game Controls (Buttons) */
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between buttons */
+    margin: 30px auto 0 auto;
+    width: 90%;
+    max-width: 400px;
+}
+
+.game-controls button {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+    color: #F7FFF7;
+}
+
+#difficulty-toggle {
+    background-color: #FF6B6B;
+}
+
+#difficulty-toggle:hover {
+    background-color: #E65A5A;
+}
+
+#restart {
+    background-color: #FF6B6B;
+}
+
+#restart:hover {
+    background-color: #E65A5A;
+}
+
+/* Media Queries */
+@media (max-width: 900px) {
+    header h1 {
+        font-size: 32px;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .btn {
+        font-size: 2.5rem;
+    }
+
+    .score-board {
+        width: 90%;
+        max-width: 350px;
+        flex-direction: column;
+        height: auto;
+        padding: 10px 10px;
+        align-items: flex-start;
+    }
+
+    .score-board > p {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .scores-wrapper {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    #user,
+    #comp {
+        width: 48%;
+        margin-bottom: 0;
+    }
+
+    #user-score,
+    #comp-score {
+        font-size: 1.6rem;
+    }
+
+    .score-text {
+        font-size: 1rem;
+    }
+
+    .game-controls button {
+        padding: 12px 25px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 500px) {
+    header h1 {
+        font-size: 28px;
+    }
+
+    .container {
+        width: 95%;
+        max-width: 300px;
+    }
+
+    .btn {
+        font-size: 2rem;
+    }
+
+    .score-board {
+        width: 95%;
+        max-width: 300px;
+    }
+
+    .score-board > p {
+        font-size: 1.2rem;
+    }
+
+    #user-score,
+    #comp-score {
+        font-size: 1.5rem;
+    }
+
+    .score-text {
+        font-size: 0.9rem;
+    }
+
+    .game-controls button {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}

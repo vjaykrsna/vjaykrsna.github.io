@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Registration Form</title>
+    </head>
+
+    <body>
+        <h1>Registration Form</h1>
+        <form action="/register">
+            <input
+                type="text"
+                name="fname"
+                id="fname"
+                placeholder="First Name"
+            />
+            <input
+                type="text"
+                name="lname"
+                id="lname"
+                placeholder="Last Name"
+            />
+            <br />
+            <label for="gender">Select your gender : </label>
+            <select name="gender" id="gender">
+                <option value="m">Male</option>
+                <option value="f">Female</option>
+                <option value="o">Other</option>
+            </select>
+            <br />
+            <label for="terms">Do you agree to our terms of services? </label>
+            <input type="checkbox" id="terms" name="terms" />
+            <br />
+            <button>Register</button>
+        </form>
+        <br />
+        <hr />
+        <h3>Youtube Search (Works)</h3>
+        <p>Making use of html form to search on youtube from this page.</p>
+        <form action="https://www.youtube.com/results">
+            <input type="text" placeholder="query" name="search_query" />
+            <button>search</button>
+        </form>
+        <br />
+        <hr />
+        <h3>Google Search (Works)</h3>
+        <form action="https://www.google.com/search">
+            <input type="text" name="q" placeholder="query" />
+            <button>search</button>
+        </form>
+        <br />
+        <hr />
+        <br /><br /><br />
+        <form action="/feedback">
+            <label for="feedback">Your feedback here : </label>
+            <textarea
+                name="feedback"
+                id="feedback"
+                cols="20"
+                rows="3"
+                placeholder="Help us improve with your feedback."
+            ></textarea>
+            <br />
+            <label for="sat">How satisfied were you? </label>
+            <input
+                type="range"
+                name="satisfaction"
+                id="sat"
+                step="2"
+                min="0"
+                max="10"
+            />
+            <br />
+            <button>Submit</button>
+        </form>
+    </body>
+</html>

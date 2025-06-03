@@ -1,0 +1,38 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#frame {
+    height: 450px;
+    width: 150px;
+    background-color: black;
+    margin: auto;
+    padding-top: 11.25px;
+    padding-bottom: 11.25px;
+    box-sizing: border-box; /* Include padding in the element's total height */
+}
+
+#red {
+    height: 30%;
+    width: 90%;
+    border-radius: 50%;
+    background-color: red;
+    margin: 0 auto; /* For horizontal centering */
+}
+
+#yellow {
+    height: 30%;
+    width: 90%;
+    border-radius: 50%;
+    background-color: yellow;
+    margin: 11.25px auto 0 auto; /* 11.25px top margin, 0 bottom, auto left/right */
+}
+
+#green {
+    height: 30%;
+    width: 90%;
+    border-radius: 50%;
+    background-color: green;
+    margin: 11.25px auto 0 auto; /* 11.25px top margin, 0 bottom, auto left/right */
+}
