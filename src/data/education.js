@@ -10,7 +10,8 @@ export const education = [
   {
     title: "Diploma · Plastic Mould Technology",
     timeframe: "2019 — 2022",
-    summary: "Central Institute of Petrochemicals Engineering & Technology (CIPET), Chennai",
+    summary:
+      "Central Institute of Petrochemicals Engineering & Technology (CIPET), Chennai",
     bullets: ["Percentage: 84%"],
   },
   {

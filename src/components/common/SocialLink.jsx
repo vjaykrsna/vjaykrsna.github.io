@@ -1,4 +1,9 @@
-export default function SocialLink({ href, label, icon: Icon, variant = "pill" }) {
+export default function SocialLink({
+  href,
+  label,
+  icon: Icon,
+  variant = "pill",
+}) {
   const isExternal = href ? href.startsWith("http") : false;
   const commonProps = {
     href,
@@ -33,7 +38,12 @@ export default function SocialLink({ href, label, icon: Icon, variant = "pill" }
       {...commonProps}
       className="group inline-flex items-center gap-2 text-sm text-base-400 transition hover:text-accent"
     >
-      {Icon ? <Icon className="h-4 w-4 text-accent transition group-hover:text-accent" aria-hidden /> : null}
+      {Icon ? (
+        <Icon
+          className="h-4 w-4 text-accent transition group-hover:text-accent"
+          aria-hidden
+        />
+      ) : null}
       <span>{label}</span>
     </a>
   );

@@ -6,9 +6,9 @@ export default function Hero({ profileLinks, socialLinks }) {
   return (
     <section
       id="top"
-    className="relative mx-auto my-12 w-full max-w-[min(96rem,100vw-3rem)] overflow-hidden rounded-[2.75rem] border border-base-800/60 bg-[radial-gradient(circle_at_top_left,_hsla(48,96%,53%,0.08),transparent_60%)] shadow-[0_40px_120px_-80px_rgba(255,255,180,0.35)] backdrop-blur-sm sm:my-16 lg:my-20"
+      className="relative mx-auto my-12 w-full max-w-[min(96rem,100vw-3rem)] overflow-hidden rounded-[2.75rem] border border-base-800/60 bg-[radial-gradient(circle_at_top_left,_hsla(48,96%,53%,0.08),transparent_60%)] shadow-[0_40px_120px_-80px_rgba(255,255,180,0.35)] backdrop-blur-sm sm:my-16 lg:my-20"
     >
-    <div className="absolute inset-0 -z-10 bg-base-900/85" aria-hidden />
+      <div className="absolute inset-0 -z-10 bg-base-900/85" aria-hidden />
       <div className="relative flex min-h-[72vh] flex-col gap-12 px-6 py-16 sm:px-14 sm:py-20 lg:min-h-[78vh] xl:px-20">
         <Header />
         <div className="grid flex-1 items-center gap-12 md:grid-cols-[minmax(0,40%)_minmax(0,60%)] md:gap-16">
@@ -21,7 +21,10 @@ export default function Hero({ profileLinks, socialLinks }) {
                 Building meaningful things that helps.
               </h1>
               <p className="mx-auto max-w-xl text-base text-base-200 md:mx-0">
-                I’m Vijay Krishna — hacking on GenAI workflows, automating developer chores, and keeping the frontend playful when it helps the story land. Still charting the path, but shipping the commits in public.
+                I’m Vijay Krishna — hacking on GenAI workflows, automating
+                developer chores, and keeping the frontend playful when it helps
+                the story land. Still charting the path, but shipping the
+                commits in public.
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4 md:justify-start">

@@ -1,25 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Learning Plan</title>
-    <link rel="stylesheet" href="learningPlan.css">
+    <link rel="stylesheet" href="learningPlan.css" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <main id="markdown-content">
-        <!-- Markdown-->
+      <!-- Markdown-->
     </main>
     <footer>
-        <p>&copy; 2025 Vijay Krishna</p>
+      <p>&copy; 2025 Vijay Krishna</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const markdownContent = `
+      document.addEventListener("DOMContentLoaded", () => {
+        const markdownContent = `
 ---
 
 ## 🧱 **1. Foundations (Core Web Dev)**
@@ -148,9 +147,9 @@ HTML → CSS → JS → React → Node → Express → MongoDB → Fullstack Pro
 
 ---
 `;
-            document.getElementById('markdown-content').innerHTML = marked.parse(markdownContent);
-        });
+        document.getElementById("markdown-content").innerHTML =
+          marked.parse(markdownContent);
+      });
     </script>
-</body>
-
+  </body>
 </html>

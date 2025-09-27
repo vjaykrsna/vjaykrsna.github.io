@@ -108,7 +108,9 @@ export default function ProfileDataTerminal() {
           <span className="h-3 w-3 rounded-full bg-amber-300/80" />
           <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
         </div>
-        <p className="font-mono text-xs text-base-500">vijay@portfolio:~$ g++ about.cpp && ./a.out</p>
+        <p className="font-mono text-xs text-base-500">
+          vijay@portfolio:~$ g++ about.cpp && ./a.out
+        </p>
         <div className="hidden text-xs uppercase tracking-[0.3em] text-base-600 sm:block">
           Profile snapshot
         </div>
@@ -124,7 +126,10 @@ export default function ProfileDataTerminal() {
               className={`font-mono text-sm leading-6 text-base-200 ${indentClasses[line.indent] ?? "pl-0"}`}
             >
               {line.tokens.map((token, tokenIdx) => (
-                <span key={`token-${idx}-${tokenIdx}`} className={tokenClasses[token.type] ?? "text-base-200"}>
+                <span
+                  key={`token-${idx}-${tokenIdx}`}
+                  className={tokenClasses[token.type] ?? "text-base-200"}
+                >
                   {token.value}
                 </span>
               ))}
