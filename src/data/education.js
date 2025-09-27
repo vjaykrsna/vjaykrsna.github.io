@@ -16,7 +16,7 @@ export const education = [
   },
   {
     title: "High School · 10th Grade",
-    timeframe: "2019",
+    timeframe: "2017 — 2019",
     summary: "Ramkrishna Children’s Academy, Begusarai",
     bullets: ["Percentage: 69%"],
   },
