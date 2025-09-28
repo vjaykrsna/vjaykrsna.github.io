@@ -1,10 +1,10 @@
 export default function FocusAreas({ areas }) {
   return (
-    <div className="grid gap-6 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {areas.map((area) => (
         <article
           key={area.title}
-          className="rounded-3xl border border-base-700 bg-base-800 p-6 shadow-[0_20px_60px_-50px_rgba(8,12,24,0.8)] transition hover:-translate-y-1 hover:border-support-teal/40 hover:bg-base-800/95"
+          className="group rounded-3xl border border-base-700 bg-base-800 p-6 shadow-[0_20px_60px_-50px_rgba(8,12,24,0.8)] transition hover:-translate-y-1 hover:border-support-teal/40 hover:bg-base-800/95"
         >
           <h3 className="text-xl font-semibold text-base-100">{area.title}</h3>
           <p className="mt-3 text-sm text-base-200">{area.description}</p>

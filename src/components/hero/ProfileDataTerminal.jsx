@@ -1,5 +1,7 @@
 import { profileInfo } from "../../data/profile.js";
 
+import { useEffect, useState } from "react";
+
 const indentClasses = ["pl-0", "pl-6", "pl-12"];
 
 const tokenClasses = {
@@ -12,6 +14,8 @@ const tokenClasses = {
   punctuation: "text-base-500",
   comment: "text-base-500 italic",
 };
+
+const REVEAL_INTERVAL = 160;
 
 const lines = [
   {
@@ -98,44 +102,72 @@ const lines = [
 ];
 
 export default function ProfileDataTerminal() {
+  const totalLines = lines.length;
+  const [visibleLines, setVisibleLines] = useState(0);
+
+  useEffect(() => {
+    if (visibleLines >= totalLines) {
+      return undefined;
+    }
+
+    const timeoutId = setTimeout(() => {
+      setVisibleLines((prev) => Math.min(totalLines, prev + 1));
+    }, REVEAL_INTERVAL);
+
+    return () => clearTimeout(timeoutId);
+  }, [visibleLines, totalLines]);
+
+  const displayedLines = lines.slice(0, visibleLines);
+  const isBooting = displayedLines.length === 0;
+
   return (
     <section
       aria-labelledby="profile-terminal-title"
       className="rounded-3xl border border-base-800/70 bg-base-900/70 backdrop-blur-sm"
     >
-      <div className="flex items-center justify-between gap-4 border-b border-base-800/70 bg-base-900/70 px-5 py-3">
-        <div className="flex items-center gap-1" aria-hidden>
-          <span className="h-3 w-3 rounded-full bg-rose-400/80" />
-          <span className="h-3 w-3 rounded-full bg-amber-300/80" />
-          <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+      <div className="flex items-center justify-between gap-4 border-b border-base-800/70 bg-base-900/70 px-5 py-3 overflow-hidden">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1" aria-hidden>
+            <span className="h-3 w-3 rounded-full bg-rose-400/80" />
+            <span className="h-3 w-3 rounded-full bg-amber-300/80" />
+            <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+          </div>
+          <p className="font-mono text-xs text-base-500">
+            vijay@portfolio:~$ g++ about.cpp && ./a.out
+          </p>
         </div>
-        <p className="font-mono text-xs text-base-500">
-          vijay@portfolio:~$ g++ about.cpp && ./a.out
-        </p>
         <div className="hidden text-xs uppercase tracking-[0.3em] text-base-600 sm:block">
           Profile snapshot
         </div>
       </div>
-      <div className="overflow-x-auto px-5 py-5">
+      <div className="overflow-x-auto px-4 py-4 sm:px-5">
         <div id="profile-terminal-title" className="sr-only">
           Terminal style profile summary
         </div>
         <div className="space-y-1">
-          {lines.map((line, idx) => (
-            <div
-              key={`terminal-line-${idx}`}
-              className={`font-mono text-sm leading-6 text-base-200 ${indentClasses[line.indent] ?? "pl-0"}`}
-            >
-              {line.tokens.map((token, tokenIdx) => (
-                <span
-                  key={`token-${idx}-${tokenIdx}`}
-                  className={tokenClasses[token.type] ?? "text-base-200"}
-                >
-                  {token.value}
-                </span>
-              ))}
+          {isBooting ? (
+            <div className="font-mono text-sm uppercase tracking-[0.3em] text-base-500/80">
+              booting session...
             </div>
-          ))}
+          ) : (
+            displayedLines.map((line, idx) => (
+              <div
+                key={`terminal-line-${idx}`}
+                className={`font-mono text-sm leading-6 text-base-200 ${
+                  indentClasses[line.indent] ?? "pl-0"
+                }`}
+              >
+                {line.tokens.map((token, tokenIdx) => (
+                  <span
+                    key={`token-${idx}-${tokenIdx}`}
+                    className={tokenClasses[token.type] ?? "text-base-200"}
+                  >
+                    {token.value}
+                  </span>
+                ))}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </section>

@@ -2,15 +2,20 @@ import Header from "../layout/Header.jsx";
 import SocialLink from "../common/SocialLink.jsx";
 import ProfileDataTerminal from "./ProfileDataTerminal.jsx";
 
-export default function Hero({ profileLinks, socialLinks }) {
+export default function Hero({
+  profileLinks,
+  socialLinks,
+  sections = [],
+  activeSection = "top",
+}) {
   return (
     <section
       id="top"
-      className="relative mx-auto my-12 w-full max-w-[min(96rem,100vw-3rem)] overflow-hidden rounded-[2.75rem] border border-base-800/60 bg-[radial-gradient(circle_at_top_left,_hsla(48,96%,53%,0.08),transparent_60%)] shadow-[0_40px_120px_-80px_rgba(255,255,180,0.35)] backdrop-blur-sm sm:my-16 lg:my-20"
+      className="relative mx-auto my-12 w-full max-w-6xl overflow-hidden rounded-3xl border border-base-800/60 bg-[radial-gradient(circle_at_top_left,_hsla(48,96%,53%,0.08),transparent_60%)] shadow-[0_40px_120px_-80px_rgba(255,255,180,0.35)] backdrop-blur-sm sm:my-16 lg:my-20"
     >
       <div className="absolute inset-0 -z-10 bg-base-900/85" aria-hidden />
-      <div className="relative flex min-h-[72vh] flex-col gap-12 px-6 py-16 sm:px-14 sm:py-20 lg:min-h-[78vh] xl:px-20">
-        <Header />
+      <div className="relative flex min-h-[72vh] flex-col gap-12 px-6 py-16 sm:px-8 sm:py-20 lg:min-h-[78vh] lg:px-10">
+        <Header sections={sections} activeSection={activeSection} />
         <div className="grid flex-1 items-center gap-12 md:grid-cols-[minmax(0,40%)_minmax(0,60%)] md:gap-16">
           <div className="space-y-8 text-center md:text-left">
             <div className="space-y-4">
@@ -37,7 +42,7 @@ export default function Hero({ profileLinks, socialLinks }) {
                 Download resume
               </a>
             </div>
-            <div className="flex flex-wrap justify-center gap-3 md:justify-start">
+            <div className="grid w-full max-w-xl auto-cols-max grid-flow-col grid-rows-2 justify-center justify-items-center gap-3 md:max-w-none md:justify-start md:justify-items-start">
               {socialLinks.map((link) => (
                 <SocialLink key={`hero-${link.id}`} variant="pill" {...link} />
               ))}

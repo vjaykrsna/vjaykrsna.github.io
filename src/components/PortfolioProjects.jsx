@@ -1,11 +1,11 @@
 export default function PortfolioProjects({ projects }) {
   return (
     <div className="relative">
-      <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto overflow-y-visible py-2 pb-6 hide-scrollbar">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
           <article
             key={project.name}
-            className="group flex min-w-[280px] flex-1 flex-col justify-between rounded-3xl border border-base-700 bg-base-800 p-8 shadow-[0_24px_60px_-50px_rgba(8,12,24,0.8)] transition hover:-translate-y-1 hover:border-support-teal/40 hover:bg-base-800/95 sm:min-w-[320px] xl:min-w-[360px] xl:flex-none xl:w-[360px] snap-start"
+            className="group flex flex-col justify-between rounded-3xl border border-base-700 bg-base-800 p-8 shadow-[0_24px_60px_-50px_rgba(8,12,24,0.8)] transition hover:-translate-y-1 hover:border-support-teal/40 hover:bg-base-800/95"
           >
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-base-100">

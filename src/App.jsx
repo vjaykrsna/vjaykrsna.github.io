@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from "react";
+
 import AccentAura from "./components/layout/AccentAura.jsx";
 import Hero from "./components/hero/Hero.jsx";
 import HighlightsStrip from "./components/highlights/HighlightsStrip.jsx";
@@ -30,11 +32,49 @@ const sectionData = {
 };
 
 export default function App() {
+  const sectionIds = useMemo(() => sections.map((section) => section.id), []);
+  const [activeSection, setActiveSection] = useState("top");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const inView = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (inView.length > 0) {
+          const closest = inView[0].target.id;
+          setActiveSection((prev) => (prev === closest ? prev : closest));
+        }
+      },
+      {
+        threshold: [0.2, 0.4, 0.6],
+        rootMargin: "-20% 0px -30% 0px",
+      },
+    );
+
+    const targets = ["top", ...sectionIds]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    targets.forEach((el) => observer.observe(el));
+
+    return () => {
+      targets.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
+    };
+  }, [sectionIds]);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-base-900">
       <AccentAura />
-      <Hero profileLinks={profileLinks} socialLinks={socialLinks} />
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-20 px-6 pb-24 pt-12 sm:px-10">
+      <Hero
+        profileLinks={profileLinks}
+        socialLinks={socialLinks}
+        sections={sections}
+        activeSection={activeSection}
+      />
+      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-20 px-6 pb-24 pt-16 sm:px-8 lg:px-10">
         <main className="flex flex-1 flex-col gap-28">
           <HighlightsStrip items={snapshotHighlights} />
           {sections.map((section) => {

@@ -13,7 +13,7 @@ export default function HighlightsStrip({ items }) {
           aria-hidden
         />
       </div>
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <article
             key={item.title}
