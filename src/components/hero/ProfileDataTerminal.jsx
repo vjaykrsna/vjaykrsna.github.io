@@ -1,3 +1,5 @@
+import { profileInfo } from "../../data/profile.js";
+
 const indentClasses = ["pl-0", "pl-6", "pl-12"];
 
 const tokenClasses = {
@@ -32,7 +34,7 @@ const lines = [
     tokens: [
       { type: "variable", value: "this.alias" },
       { type: "operator", value: " = " },
-      { type: "string", value: '"vjaykrsna"' },
+      { type: "string", value: `"${profileInfo.alias}"` },
       { type: "punctuation", value: ";" },
     ],
   },
@@ -41,7 +43,7 @@ const lines = [
     tokens: [
       { type: "variable", value: "this.home" },
       { type: "operator", value: " = " },
-      { type: "string", value: '"Bihar"' },
+      { type: "string", value: `"${profileInfo.home}"` },
       { type: "punctuation", value: ";" },
     ],
   },
@@ -51,9 +53,9 @@ const lines = [
       { type: "variable", value: "this.modes" },
       { type: "operator", value: " = " },
       { type: "bracket", value: "[" },
-      { type: "string", value: '"software dev"' },
+      { type: "string", value: '"software developer"' },
       { type: "punctuation", value: ", " },
-      { type: "string", value: '"genai tinkerer"' },
+      { type: "string", value: '"GenAI tinkerer"' },
       { type: "punctuation", value: "]" },
       { type: "punctuation", value: ";" },
     ],
@@ -74,11 +76,10 @@ const lines = [
     tokens: [
       { type: "keyword", value: "return" },
       { type: "operator", value: " [" },
-      { type: "string", value: '"mini tools"' },
-      { type: "punctuation", value: ", " },
-      { type: "string", value: '"rag bots"' },
-      { type: "punctuation", value: ", " },
-      { type: "string", value: '"frontend-for-fun"' },
+      ...profileInfo.shiplist.flatMap((item, i, arr) => [
+        { type: "string", value: `"${item}"` },
+        ...(i < arr.length - 1 ? [{ type: "punctuation", value: ", " }] : []),
+      ]),
       { type: "operator", value: " ];" },
     ],
   },
@@ -88,7 +89,7 @@ const lines = [
   },
   {
     indent: 1,
-    tokens: [{ type: "comment", value: "// ping: vijay74684@gmail.com" }],
+    tokens: [{ type: "comment", value: `// ping: ${profileInfo.email}` }],
   },
   {
     indent: 0,

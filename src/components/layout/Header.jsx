@@ -19,6 +19,9 @@ export default function Header() {
         <a className="border-b border-base-600/70 pb-1 transition hover:border-support-teal hover:text-base-100" href="#experience">
           Experience
         </a>
+        <a className="border-b border-base-600/70 pb-1 transition hover:border-support-teal hover:text-base-100" href="#education">
+          Education
+        </a>
         <a className="border-b border-base-600/70 pb-1 transition hover:border-support-teal hover:text-base-100" href="#focus">
           Focus
         </a>

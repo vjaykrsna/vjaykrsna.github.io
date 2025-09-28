@@ -11,7 +11,7 @@ export const snapshotHighlights = [
   },
   {
     eyebrow: "Tooling",
-    title: "LLM workflow helpers",
+    title: "GenAI workflow helpers",
     body: "Experimenting with promptable CLI tooling that makes documenting and automating repeatable tasks painless.",
   },
 ];

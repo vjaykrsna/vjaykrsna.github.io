@@ -1,6 +1,4 @@
-import { focusAreas as focusAreaList } from "../data/focusAreas.js";
-
-export default function FocusAreas({ areas = focusAreaList }) {
+export default function FocusAreas({ areas }) {
   return (
     <div className="grid gap-6 md:grid-cols-3">
       {areas.map((area) => (

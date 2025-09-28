@@ -1,6 +1,4 @@
-import { projects as projectList } from "../data/projects.js";
-
-export default function PortfolioProjects({ projects = projectList }) {
+export default function PortfolioProjects({ projects }) {
   return (
     <div className="relative">
       <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto overflow-y-visible py-2 pb-6 hide-scrollbar">

@@ -18,7 +18,7 @@ export default function Hero({ profileLinks, socialLinks }) {
                 Software developer (GenAI curious) · Bihar
               </p>
               <h1 className="font-display text-[26px] font-semibold leading-tight text-base-100 sm:text-[38px] md:text-[50px]">
-                Building meaningful things that helps.
+                Building meaningful things that help.
               </h1>
               <p className="mx-auto max-w-xl text-base text-base-200 md:mx-0">
                 I’m Vijay Krishna — hacking on GenAI workflows, automating

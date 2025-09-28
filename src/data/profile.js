@@ -41,3 +41,11 @@ export const socialLinks = [
   },
   { id: "email", label: "Email", href: profileLinks.email, icon: MailIcon },
 ];
+
+export const profileInfo = {
+  alias: "vjaykrsna",
+  home: "Bihar",
+  modes: ["software developer", "GenAI tinkerer"],
+  shiplist: ["mini tools", "RAG bots", "frontend-for-fun"],
+  email: profileLinks.email,
+};

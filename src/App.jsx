@@ -10,12 +10,23 @@ import SectionHeading from "./components/common/SectionHeading.jsx";
 import { profileLinks, socialLinks } from "./data/profile.js";
 import { sections } from "./data/sections.js";
 import { snapshotHighlights } from "./data/highlights.js";
+import { projects } from "./data/projects.js";
+import { experience } from "./data/experience.js";
+import { education } from "./data/education.js";
+import { focusAreas } from "./data/focusAreas.js";
 
 const sectionComponents = {
   projects: PortfolioProjects,
   experience: ExperienceHighlights,
   education: EducationHighlights,
   focus: FocusAreas,
+};
+
+const sectionData = {
+  projects,
+  experience,
+  education,
+  focus: focusAreas,
 };
 
 export default function App() {
@@ -35,7 +46,18 @@ export default function App() {
             return (
               <section key={section.id} id={section.id} className="space-y-12">
                 <SectionHeading {...section} />
-                <SectionComponent />
+                {section.id === "projects" && (
+                  <SectionComponent projects={projects} />
+                )}
+                {section.id === "experience" && (
+                  <SectionComponent items={experience} />
+                )}
+                {section.id === "education" && (
+                  <SectionComponent items={education} />
+                )}
+                {section.id === "focus" && (
+                  <SectionComponent areas={focusAreas} />
+                )}
               </section>
             );
           })}
