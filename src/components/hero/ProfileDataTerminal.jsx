@@ -15,7 +15,7 @@ const tokenClasses = {
   comment: "text-base-500 italic",
 };
 
-const REVEAL_INTERVAL = 160;
+const REVEAL_INTERVAL = 120;
 
 const lines = [
   {
@@ -123,16 +123,16 @@ export default function ProfileDataTerminal() {
   return (
     <section
       aria-labelledby="profile-terminal-title"
-      className="rounded-3xl border border-base-800/70 bg-base-900/70 backdrop-blur-sm"
+      className="rounded-3xl border border-white/5 bg-gradient-to-b from-base-900/75 to-base-900/55 p-2 ring-1 ring-white/[0.03] backdrop-blur-sm"
     >
-      <div className="flex items-center justify-between gap-4 border-b border-base-800/70 bg-base-900/70 px-5 py-3 overflow-hidden">
+      <div className="flex items-center justify-between gap-3 overflow-hidden rounded-2xl border border-white/5 bg-base-900/78 px-3 py-3 sm:gap-4 sm:px-5">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1" aria-hidden>
             <span className="h-3 w-3 rounded-full bg-rose-400/80" />
             <span className="h-3 w-3 rounded-full bg-amber-300/80" />
             <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
           </div>
-          <p className="font-mono text-xs text-base-500">
+          <p className="font-mono text-[10px] text-base-500 sm:text-xs">
             vijay@portfolio:~$ g++ about.cpp && ./a.out
           </p>
         </div>
@@ -140,7 +140,7 @@ export default function ProfileDataTerminal() {
           Profile snapshot
         </div>
       </div>
-      <div className="overflow-x-auto px-4 py-4 sm:px-5">
+      <div className="mt-2 overflow-hidden rounded-2xl border border-white/5 bg-base-900/52 px-3 py-3 sm:px-5 sm:py-4">
         <div id="profile-terminal-title" className="sr-only">
           Terminal style profile summary
         </div>
@@ -153,7 +153,7 @@ export default function ProfileDataTerminal() {
             displayedLines.map((line, idx) => (
               <div
                 key={`terminal-line-${idx}`}
-                className={`font-mono text-sm leading-6 text-base-200 ${
+                className={`font-mono text-[13px] leading-6 text-base-200 sm:text-sm ${
                   indentClasses[line.indent] ?? "pl-0"
                 }`}
               >

@@ -25,7 +25,7 @@ export default function SocialLink({
     return (
       <a
         {...commonProps}
-        className="inline-flex items-center gap-2 rounded-full border border-base-700/60 bg-base-800/50 px-4 py-2 text-sm font-medium text-base-100 transition hover:border-accent/50 hover:bg-base-700/70 hover:text-accent"
+        className="inline-flex items-center gap-2 rounded-full border border-white/6 bg-gradient-to-r from-base-800/70 to-base-900/65 px-4 py-2 text-sm font-medium text-base-100 ring-1 ring-white/[0.03] transition hover:border-accent/25 hover:bg-base-700/70 hover:text-accent"
       >
         {Icon ? <Icon className="h-4 w-4 text-accent" aria-hidden /> : null}
         <span>{label}</span>

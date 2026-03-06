@@ -8,6 +8,7 @@ import ExperienceHighlights from "./components/ExperienceHighlights.jsx";
 import EducationHighlights from "./components/EducationHighlights.jsx";
 import FocusAreas from "./components/FocusAreas.jsx";
 import Footer from "./components/layout/Footer.jsx";
+import Header from "./components/layout/Header.jsx";
 import SectionHeading from "./components/common/SectionHeading.jsx";
 import { profileLinks, socialLinks } from "./data/profile.js";
 import { sections } from "./data/sections.js";
@@ -66,16 +67,12 @@ export default function App() {
   }, [sectionIds]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-base-900">
+    <div className="relative min-h-screen overflow-x-clip bg-base-900">
       <AccentAura />
-      <Hero
-        profileLinks={profileLinks}
-        socialLinks={socialLinks}
-        sections={sections}
-        activeSection={activeSection}
-      />
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-20 px-6 pb-24 pt-16 sm:px-8 lg:px-10">
-        <main className="flex flex-1 flex-col gap-28">
+      <Header sections={sections} activeSection={activeSection} />
+      <Hero profileLinks={profileLinks} socialLinks={socialLinks} />
+      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-12 px-4 pb-16 pt-10 sm:gap-14 sm:px-6 sm:pb-20 sm:pt-12 md:px-8 lg:gap-16 lg:px-10 lg:pb-24 lg:pt-16">
+        <main className="flex flex-1 flex-col gap-12 sm:gap-16 lg:gap-20">
           <HighlightsStrip items={snapshotHighlights} />
           {sections.map((section) => {
             const SectionComponent = sectionComponents[section.id];
@@ -84,7 +81,11 @@ export default function App() {
             }
 
             return (
-              <section key={section.id} id={section.id} className="space-y-12">
+              <section
+                key={section.id}
+                id={section.id}
+                className="space-y-7 sm:space-y-9 lg:space-y-12"
+              >
                 <SectionHeading {...section} />
                 {section.id === "projects" && (
                   <SectionComponent projects={projects} />

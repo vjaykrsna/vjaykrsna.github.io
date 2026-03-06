@@ -1,19 +1,19 @@
 export default function PortfolioProjects({ projects }) {
   return (
     <div className="relative">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
         {projects.map((project) => (
           <article
             key={project.name}
-            className="group flex flex-col justify-between rounded-3xl border border-base-700 bg-base-800 p-8 shadow-[0_24px_60px_-50px_rgba(8,12,24,0.8)] transition hover:-translate-y-1 hover:border-support-teal/40 hover:bg-base-800/95"
+            className="group flex flex-col justify-between rounded-2xl border border-base-700/80 bg-gradient-to-br from-base-800/95 via-base-800/82 to-base-900/92 p-5 shadow-[0_24px_60px_-50px_rgba(8,12,24,0.8)] ring-1 ring-white/5 transition hover:-translate-y-1 hover:border-support-teal/35 hover:from-base-800/98 hover:to-base-800/88 sm:rounded-3xl sm:p-6 lg:p-8"
           >
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold text-base-100">
+            <div className="space-y-3 sm:space-y-4">
+              <h3 className="text-xl font-semibold text-base-100 sm:text-2xl">
                 {project.name}
               </h3>
               <p className="text-sm text-base-200">{project.description}</p>
             </div>
-            <div className="mt-6 flex flex-wrap gap-2 text-xs text-support-teal">
+            <div className="mt-5 flex flex-wrap gap-2 text-xs text-support-teal sm:mt-6">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
@@ -23,7 +23,7 @@ export default function PortfolioProjects({ projects }) {
                 </span>
               ))}
             </div>
-            <div className="mt-8 flex items-center gap-4 text-sm font-medium">
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-medium sm:mt-8">
               {project.link ? (
                 <a
                   href={project.link}
@@ -42,7 +42,7 @@ export default function PortfolioProjects({ projects }) {
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 text-base-400 transition hover:text-accent"
                 >
-                  {project.link ? "View code" : "View repo"}
+                  Source code
                 </a>
               ) : null}
             </div>
