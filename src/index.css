@@ -50,3 +50,21 @@ span {
   display: none;
 }
 
+@media print {
+  @page {
+    size: letter;
+    margin: 0.45in;
+  }
+
+  body {
+    background: white !important;
+    background-image: none !important;
+    color: black !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+

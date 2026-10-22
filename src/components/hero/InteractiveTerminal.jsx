@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { profileInfo, profileLinks } from "../../data/profile.js";
 import { projects } from "../../data/projects.js";
 
-const QUICK_COMMANDS = ["help", "projects", "skills", "bio", "contact", "clear"];
+const QUICK_COMMANDS = ["help", "resume", "projects", "skills", "bio", "contact", "clear"];
 
 const codeLines = [
   {
@@ -210,6 +210,7 @@ export default function InteractiveTerminal() {
             <div className="grid grid-cols-[120px_1fr] gap-x-2 gap-y-1.5 pt-1">
               {[
                 { cmd: "cat profile.js", desc: "Display profile source code" },
+                { cmd: "resume", desc: "View & export ATS resume" },
                 { cmd: "bio", desc: "About me & core focus" },
                 { cmd: "projects", desc: "Highlighted work & repositories" },
                 { cmd: "skills", desc: "Tech stack & engineering toolbelt" },
@@ -323,6 +324,16 @@ export default function InteractiveTerminal() {
               </a>
             </p>
           </div>
+        );
+        break;
+
+      case "resume":
+      case "cv":
+        window.location.hash = "resume";
+        outputElement = (
+          <p className="text-xs sm:text-sm font-mono text-emerald-400">
+            Navigating to printable ATS resume view...
+          </p>
         );
         break;
 

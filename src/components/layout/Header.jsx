@@ -90,8 +90,8 @@ export default function Header({ sections = [], activeSection = "top" }) {
         <div className="flex items-center gap-2.5">
           <a
             href={profileLinks.resume}
-            target="_blank"
-            rel="noreferrer"
+            target={profileLinks.resume.startsWith("#") ? undefined : "_blank"}
+            rel={profileLinks.resume.startsWith("#") ? undefined : "noreferrer"}
             className="hidden sm:inline-flex items-center justify-center rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-base-900 transition hover:bg-accent-hover hover:shadow-glow active:scale-95"
           >
             Resume
@@ -140,12 +140,12 @@ export default function Header({ sections = [], activeSection = "top" }) {
             })}
             <a
               href={profileLinks.resume}
-              target="_blank"
-              rel="noreferrer"
+              target={profileLinks.resume.startsWith("#") ? undefined : "_blank"}
+              rel={profileLinks.resume.startsWith("#") ? undefined : "noreferrer"}
               onClick={() => setIsMenuOpen(false)}
               className="mt-2 text-center rounded-xl bg-accent py-2 text-xs font-semibold text-base-900 transition hover:bg-accent-hover"
             >
-              Download Resume
+              View Resume
             </a>
           </div>
         </div>

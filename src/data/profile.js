@@ -10,7 +10,7 @@ export const profileLinks = {
   github: "https://github.com/vjaykrsna",
   linkedin: "https://www.linkedin.com/in/vjaykrsna/",
   email: "mailto:vijay74684@gmail.com",
-  resume: "/Vijay_Krishna_Resume.pdf",
+  resume: "#resume",
 };
 
 export const socialLinks = [

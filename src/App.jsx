@@ -9,6 +9,7 @@ import Timeline from "./components/common/Timeline.jsx";
 import FocusAreas from "./components/FocusAreas.jsx";
 import Footer from "./components/layout/Footer.jsx";
 import SectionHeading from "./components/common/SectionHeading.jsx";
+import ResumeView from "./components/resume/ResumeView.jsx";
 import { profileLinks, socialLinks } from "./data/profile.js";
 import { sections } from "./data/sections.js";
 import { snapshotHighlights } from "./data/highlights.js";
@@ -27,6 +28,23 @@ const sectionComponents = {
 export default function App() {
   const sectionIds = useMemo(() => sections.map((section) => section.id), []);
   const [activeSection, setActiveSection] = useState("top");
+  const [showResume, setShowResume] = useState(() => {
+    return typeof window !== "undefined" && window.location.hash === "#resume";
+  });
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setShowResume(window.location.hash === "#resume");
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  const handleBackToPortfolio = () => {
+    window.location.hash = "";
+    setShowResume(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,6 +89,10 @@ export default function App() {
       observer.disconnect();
     };
   }, [sectionIds]);
+
+  if (showResume) {
+    return <ResumeView onBack={handleBackToPortfolio} />;
+  }
 
   return (
     <div className="relative min-h-screen bg-base-950 text-base-100 font-sans overflow-x-clip">
