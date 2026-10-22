@@ -9,6 +9,7 @@ export const sections = [
   {
     id: "projects",
     title: "Recent Work",
+    heading: "Featured Projects & Experiments",
     navLabel: "Work",
     description:
       "A running log of scrappy experiments—from AI helpers to shell scripts—that taught me something new.",

@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 
+import Header from "./components/layout/Header.jsx";
 import AccentAura from "./components/layout/AccentAura.jsx";
 import Hero from "./components/hero/Hero.jsx";
 import HighlightsStrip from "./components/highlights/HighlightsStrip.jsx";
 import PortfolioProjects from "./components/PortfolioProjects.jsx";
-import ExperienceHighlights from "./components/ExperienceHighlights.jsx";
-import EducationHighlights from "./components/EducationHighlights.jsx";
+import Timeline from "./components/common/Timeline.jsx";
 import FocusAreas from "./components/FocusAreas.jsx";
 import Footer from "./components/layout/Footer.jsx";
-import Header from "./components/layout/Header.jsx";
 import SectionHeading from "./components/common/SectionHeading.jsx";
 import { profileLinks, socialLinks } from "./data/profile.js";
 import { sections } from "./data/sections.js";
@@ -20,16 +19,9 @@ import { focusAreas } from "./data/focusAreas.js";
 
 const sectionComponents = {
   projects: PortfolioProjects,
-  experience: ExperienceHighlights,
-  education: EducationHighlights,
+  experience: Timeline,
+  education: Timeline,
   focus: FocusAreas,
-};
-
-const sectionData = {
-  projects,
-  experience,
-  education,
-  focus: focusAreas,
 };
 
 export default function App() {
@@ -37,10 +29,23 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("top");
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < 120) {
+        setActiveSection("top");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     const observer = new IntersectionObserver(
       (entries) => {
+        if (window.scrollY < 120) {
+          setActiveSection("top");
+          return;
+        }
+
         const inView = entries
-          .filter((entry) => entry.isIntersecting)
+          .filter((entry) => entry.isIntersecting && entry.target.id !== "top")
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
         if (inView.length > 0) {
@@ -49,31 +54,40 @@ export default function App() {
         }
       },
       {
-        threshold: [0.2, 0.4, 0.6],
-        rootMargin: "-20% 0px -30% 0px",
+        threshold: [0.15, 0.4, 0.7],
+        rootMargin: "-20% 0px -50% 0px",
       },
     );
 
-    const targets = ["top", ...sectionIds]
+    const targets = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean);
 
     targets.forEach((el) => observer.observe(el));
 
     return () => {
+      window.removeEventListener("scroll", handleScroll);
       targets.forEach((el) => observer.unobserve(el));
       observer.disconnect();
     };
   }, [sectionIds]);
 
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-base-900">
+    <div className="relative min-h-screen bg-base-950 text-base-100 font-sans overflow-x-clip">
       <AccentAura />
+
+      {/* Fixed Floating Navigation Bar */}
       <Header sections={sections} activeSection={activeSection} />
-      <Hero profileLinks={profileLinks} socialLinks={socialLinks} />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-12 px-4 pb-16 pt-10 sm:gap-14 sm:px-6 sm:pb-20 sm:pt-12 md:px-8 lg:gap-16 lg:px-10 lg:pb-24 lg:pt-16">
-        <main className="flex flex-1 flex-col gap-12 sm:gap-16 lg:gap-20">
+
+      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-4 pt-16 pb-20 sm:px-6 sm:pt-20 lg:px-8">
+        <Hero
+          profileLinks={profileLinks}
+          socialLinks={socialLinks}
+        />
+
+        <main className="mt-16 flex flex-1 flex-col gap-24 sm:gap-28">
           <HighlightsStrip items={snapshotHighlights} />
+
           {sections.map((section) => {
             const SectionComponent = sectionComponents[section.id];
             if (!SectionComponent) {
@@ -81,11 +95,7 @@ export default function App() {
             }
 
             return (
-              <section
-                key={section.id}
-                id={section.id}
-                className="space-y-7 sm:space-y-9 lg:space-y-12"
-              >
+              <section key={section.id} id={section.id} className="space-y-8 sm:space-y-10 scroll-mt-28">
                 <SectionHeading {...section} />
                 {section.id === "projects" && (
                   <SectionComponent projects={projects} />
@@ -103,6 +113,7 @@ export default function App() {
             );
           })}
         </main>
+
         <Footer socialLinks={socialLinks} />
       </div>
     </div>

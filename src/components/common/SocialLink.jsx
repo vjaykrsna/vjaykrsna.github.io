@@ -1,21 +1,39 @@
+import { useState } from "react";
+import { CheckIcon } from "@heroicons/react/24/outline";
+
 export default function SocialLink({
   href,
   label,
   icon: Icon,
   variant = "pill",
 }) {
-  const isExternal = href ? href.startsWith("http") : false;
+  const [copied, setCopied] = useState(false);
+  const isMail = href ? href.startsWith("mailto:") : false;
+  const isExternal = href ? href.startsWith("http") || isMail : false;
+
+  const handleClick = (e) => {
+    if (isMail) {
+      e.preventDefault();
+      const email = href.replace("mailto:", "");
+      navigator.clipboard?.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   const commonProps = {
     href,
-    target: isExternal ? "_blank" : undefined,
-    rel: isExternal ? "noreferrer" : undefined,
-    "aria-label": label,
+    target: isExternal && !isMail ? "_blank" : undefined,
+    rel: isExternal && !isMail ? "noreferrer" : undefined,
+    "aria-label": isMail ? (copied ? "Email copied to clipboard" : `Email: ${label}`) : label,
+    title: isMail ? (copied ? "Copied to clipboard!" : "Click to copy email address") : undefined,
+    onClick: isMail ? handleClick : undefined,
   };
 
   if (!href) {
     return (
-      <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-base-700/40 px-4 py-2 text-sm text-base-500 opacity-70">
-        {Icon ? <Icon className="h-4 w-4" aria-hidden /> : null}
+      <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-white/10 px-3.5 py-1.5 text-xs text-base-500 opacity-70">
+        {Icon ? <Icon className="h-3.5 w-3.5" aria-hidden /> : null}
         <span>{label}</span>
       </span>
     );
@@ -25,10 +43,18 @@ export default function SocialLink({
     return (
       <a
         {...commonProps}
-        className="inline-flex items-center gap-2 rounded-full border border-white/6 bg-gradient-to-r from-base-800/70 to-base-900/65 px-4 py-2 text-sm font-medium text-base-100 ring-1 ring-white/[0.03] transition hover:border-accent/25 hover:bg-base-700/70 hover:text-accent"
+        className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs sm:text-sm font-medium transition active:scale-95 ${
+          copied
+            ? "border-emerald-500/50 bg-emerald-500/15 text-emerald-300"
+            : "border-white/10 bg-white/5 text-base-200 hover:border-accent/40 hover:bg-white/10 hover:text-accent"
+        }`}
       >
-        {Icon ? <Icon className="h-4 w-4 text-accent" aria-hidden /> : null}
-        <span>{label}</span>
+        {copied ? (
+          <CheckIcon className="h-3.5 w-3.5 text-emerald-400" aria-hidden />
+        ) : Icon ? (
+          <Icon className="h-3.5 w-3.5 text-accent" aria-hidden />
+        ) : null}
+        <span>{copied ? "Copied!" : label}</span>
       </a>
     );
   }
@@ -36,15 +62,19 @@ export default function SocialLink({
   return (
     <a
       {...commonProps}
-      className="group inline-flex items-center gap-2 text-sm text-base-400 transition hover:text-accent"
+      className={`group inline-flex items-center gap-2 text-xs sm:text-sm transition ${
+        copied ? "text-emerald-400 font-medium" : "text-base-300 hover:text-accent"
+      }`}
     >
-      {Icon ? (
+      {copied ? (
+        <CheckIcon className="h-4 w-4 text-emerald-400" aria-hidden />
+      ) : Icon ? (
         <Icon
-          className="h-4 w-4 text-accent transition group-hover:text-accent"
+          className="h-4 w-4 text-base-400 transition group-hover:text-accent"
           aria-hidden
         />
       ) : null}
-      <span>{label}</span>
+      <span>{copied ? "Email Copied!" : label}</span>
     </a>
   );
 }

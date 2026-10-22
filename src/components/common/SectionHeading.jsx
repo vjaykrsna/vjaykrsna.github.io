@@ -1,13 +1,23 @@
-export default function SectionHeading({ title, description, icon: Icon }) {
+export default function SectionHeading({ title, heading, description, icon: Icon }) {
   return (
-    <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <div className="space-y-3">
-        <div className="inline-flex items-center gap-3 rounded-full border border-base-700/85 bg-gradient-to-r from-base-800/90 to-base-900/80 px-3 py-1 text-xs uppercase tracking-[0.3em] text-base-300 ring-1 ring-white/5">
-          <Icon className="h-4 w-4 text-accent" />
-          <span>{title}</span>
-        </div>
-        <p className="max-w-2xl text-base text-base-300/95">{description}</p>
+    <header className="space-y-3">
+      {/* Category Eyebrow Pill */}
+      <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono uppercase tracking-wider text-accent">
+        {Icon ? <Icon className="h-3.5 w-3.5 text-accent" aria-hidden /> : null}
+        <span>{title}</span>
       </div>
+
+      {/* Prominent Semantic Heading */}
+      <h2 className="font-display text-2xl font-bold tracking-tight text-base-100 sm:text-3xl">
+        {heading || title}
+      </h2>
+
+      {/* Description */}
+      {description ? (
+        <p className="max-w-2xl text-sm sm:text-base text-base-300 leading-relaxed">
+          {description}
+        </p>
+      ) : null}
     </header>
   );
 }
