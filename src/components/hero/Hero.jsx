@@ -1,10 +1,7 @@
 import SocialLink from "../common/SocialLink.jsx";
 import InteractiveTerminal from "./InteractiveTerminal.jsx";
 
-export default function Hero({
-  profileLinks,
-  socialLinks,
-}) {
+export default function Hero({ profileLinks, socialLinks }) {
   return (
     <section
       id="top"
@@ -22,24 +19,25 @@ export default function Hero({
 
       <div className="relative grid items-center gap-8 lg:grid-cols-[minmax(0,42%)_minmax(0,58%)] lg:gap-10">
         {/* Left Column: Personal Brand & Intro */}
-        <div className="space-y-6 text-left">
+        <div className="min-w-0 space-y-6 text-left">
           {/* Status Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-medium text-emerald-300">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            <span>Software Developer · Bihar</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-1 text-xs font-medium text-emerald-300">
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            <span>Software Developer · Bihar, India</span>
           </div>
 
           {/* Heading */}
           <div className="space-y-3">
-            <h1 className="font-display text-3xl font-bold tracking-tight text-base-100 sm:text-4xl lg:text-[42px] leading-[1.14]">
-              Building meaningful tools that help.
+            <h1 className="font-display text-3xl font-bold tracking-tight text-base-100 sm:text-4xl lg:text-[42px] leading-[1.15]">
+              Engineering GenAI pipelines & Linux automation.
             </h1>
             <p className="max-w-xl text-sm sm:text-base text-base-300 leading-relaxed">
-              I’m <strong className="text-base-100 font-semibold">Vijay Krishna</strong> — 
-              engineering GenAI workflows, automating system tasks, and building clean, high-performance web applications. Still charting the path, shipping the commits in public.
+              I’m{" "}
+              <strong className="text-base-100 font-semibold">
+                Vijay Krishna
+              </strong>{" "}
+              — specializing in vector RAG pipelines, Linux system services, and
+              clean, high-performance web applications.
             </p>
           </div>
 
@@ -53,8 +51,12 @@ export default function Hero({
             </a>
             <a
               href={profileLinks.resume}
-              target={profileLinks.resume.startsWith("#") ? undefined : "_blank"}
-              rel={profileLinks.resume.startsWith("#") ? undefined : "noreferrer"}
+              target={
+                profileLinks.resume.startsWith("#") ? undefined : "_blank"
+              }
+              rel={
+                profileLinks.resume.startsWith("#") ? undefined : "noreferrer"
+              }
               className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-xs sm:text-sm font-medium text-base-200 transition hover:bg-white/10 hover:border-white/25 active:scale-95"
             >
               View Resume
@@ -64,13 +66,18 @@ export default function Hero({
           {/* Social Links Row */}
           <div className="flex flex-wrap gap-2.5 pt-1">
             {socialLinks.map((link) => (
-              <SocialLink key={`hero-${link.id}`} variant="pill" {...link} />
+              <SocialLink
+                key={`hero-${link.id}`}
+                variant="pill"
+                {...link}
+                label={link.id === "email" ? "Copy Email" : link.label}
+              />
             ))}
           </div>
         </div>
 
         {/* Right Column: Unified Interactive Terminal */}
-        <div className="w-full">
+        <div className="min-w-0 w-full">
           <InteractiveTerminal />
         </div>
       </div>

@@ -1,4 +1,9 @@
-export default function SectionHeading({ title, heading, description, icon: Icon }) {
+export default function SectionHeading({
+  title,
+  heading,
+  description,
+  icon: Icon,
+}) {
   return (
     <header className="space-y-3">
       {/* Category Eyebrow Pill */}

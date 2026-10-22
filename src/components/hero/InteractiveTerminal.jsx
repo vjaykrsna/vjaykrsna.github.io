@@ -2,108 +2,62 @@ import { useState, useRef, useEffect } from "react";
 import { profileInfo, profileLinks } from "../../data/profile.js";
 import { projects } from "../../data/projects.js";
 
-const QUICK_COMMANDS = ["help", "resume", "projects", "skills", "bio", "contact", "clear"];
+const QUICK_COMMANDS = [
+  "help",
+  "resume",
+  "projects",
+  "skills",
+  "contact",
+  "clear",
+];
 
-const codeLines = [
+const techStackYamlLines = [
+  { text: "developer: Vijay Krishna", color: "text-base-100 font-medium" },
+  { text: "role: Software Developer", color: "text-sky-300 font-medium" },
+  { text: "location: Bihar, India", color: "text-base-300" },
+  { text: "status: Available for opportunities", color: "text-emerald-300" },
+  { text: "", color: "" },
+  { text: "core_stack:", color: "text-accent font-semibold" },
   {
-    indent: 0,
-    tokens: [
-      { type: "keyword", value: "class" },
-      { type: "variable", value: " VijayKrishna" },
-      { type: "bracket", value: " {" },
-    ],
+    text: "  genai: [RAG Pipelines, ChromaDB, Gemini API]",
+    color: "text-emerald-300",
   },
   {
-    indent: 1,
-    tokens: [
-      { type: "property", value: "constructor" },
-      { type: "punctuation", value: "() {" },
-    ],
+    text: "  systems: [Linux, systemd, Bash, gdbus, Git]",
+    color: "text-sky-300",
   },
   {
-    indent: 2,
-    tokens: [
-      { type: "variable", value: "this.alias" },
-      { type: "operator", value: " = " },
-      { type: "string", value: `"${profileInfo.alias}"` },
-      { type: "punctuation", value: ";" },
-    ],
+    text: "  frontend: [React, Tailwind CSS, Vite, HTML5/CSS3]",
+    color: "text-amber-200",
   },
   {
-    indent: 2,
-    tokens: [
-      { type: "variable", value: "this.home" },
-      { type: "operator", value: " = " },
-      { type: "string", value: `"${profileInfo.home}"` },
-      { type: "punctuation", value: ";" },
-    ],
+    text: "  languages: [JavaScript (ES6+), Python, Bash, C++, SQL]",
+    color: "text-base-200",
+  },
+  { text: "", color: "" },
+  { text: "featured_work:", color: "text-accent font-semibold" },
+  {
+    text: "  - ragbot: Production support bot for 10k+ learners",
+    color: "text-base-300",
   },
   {
-    indent: 2,
-    tokens: [
-      { type: "variable", value: "this.modes" },
-      { type: "operator", value: " = " },
-      { type: "bracket", value: "[" },
-      { type: "string", value: '"software developer"' },
-      { type: "punctuation", value: ", " },
-      { type: "string", value: '"GenAI tinkerer"' },
-      { type: "bracket", value: "]" },
-      { type: "punctuation", value: ";" },
-    ],
+    text: "  - gsconnect-mount: Systemd automation for GNOME",
+    color: "text-base-300",
   },
   {
-    indent: 1,
-    tokens: [{ type: "punctuation", value: "}" }],
+    text: "  - vjs-chef: AI recipe generator with streaming UI",
+    color: "text-base-300",
   },
   {
-    indent: 1,
-    tokens: [
-      { type: "property", value: "shiplist" },
-      { type: "punctuation", value: "() {" },
-    ],
-  },
-  {
-    indent: 2,
-    tokens: [
-      { type: "keyword", value: "return" },
-      { type: "operator", value: " [" },
-      ...profileInfo.shiplist.flatMap((item, i, arr) => [
-        { type: "string", value: `"${item}"` },
-        ...(i < arr.length - 1 ? [{ type: "punctuation", value: ", " }] : []),
-      ]),
-      { type: "operator", value: " ];" },
-    ],
-  },
-  {
-    indent: 1,
-    tokens: [{ type: "punctuation", value: "}" }],
-  },
-  {
-    indent: 1,
-    tokens: [{ type: "comment", value: `// ping: ${profileInfo.email}` }],
-  },
-  {
-    indent: 0,
-    tokens: [{ type: "punctuation", value: "};" }],
+    text: "  - tenzies: High-performance React micro-app",
+    color: "text-base-300",
   },
 ];
 
-const tokenClasses = {
-  keyword: "text-accent font-semibold",
-  variable: "text-base-100",
-  operator: "text-base-400",
-  bracket: "text-base-500",
-  property: "text-sky-300 font-medium",
-  string: "text-emerald-300",
-  punctuation: "text-base-500",
-  comment: "text-base-400 italic",
-};
-
-const indentClasses = ["pl-0", "pl-4 sm:pl-5", "pl-8 sm:pl-10"];
-const REVEAL_INTERVAL = 80;
+const REVEAL_INTERVAL = 50; // ~750ms total animation
 
 export default function InteractiveTerminal() {
-  const [revealedCodeCount, setRevealedCodeCount] = useState(0);
+  const [revealedCount, setRevealedCount] = useState(0);
   const [commandOutputs, setCommandOutputs] = useState([]);
   const [inputVal, setInputVal] = useState("");
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -113,24 +67,25 @@ export default function InteractiveTerminal() {
   const terminalScrollRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Progressive print reveal animation on initial load
+  // Progressive reveal animation on initial load (~750ms total)
   useEffect(() => {
     if (isCleared) return;
-    if (revealedCodeCount >= codeLines.length) return;
+    if (revealedCount >= techStackYamlLines.length) return;
 
     const timer = setTimeout(() => {
-      setRevealedCodeCount((prev) => Math.min(codeLines.length, prev + 1));
+      setRevealedCount((prev) => Math.min(techStackYamlLines.length, prev + 1));
     }, REVEAL_INTERVAL);
 
     return () => clearTimeout(timer);
-  }, [revealedCodeCount, isCleared]);
+  }, [revealedCount, isCleared]);
 
-  // Keep internal terminal scrolled to bottom when typing/running commands, WITHOUT scrolling page
+  // Keep internal terminal scrolled to bottom when typing or executing commands
   useEffect(() => {
     if (terminalScrollRef.current) {
-      terminalScrollRef.current.scrollTop = terminalScrollRef.current.scrollHeight;
+      terminalScrollRef.current.scrollTop =
+        terminalScrollRef.current.scrollHeight;
     }
-  }, [revealedCodeCount, commandOutputs]);
+  }, [revealedCount, commandOutputs]);
 
   const runCommand = (rawCmd) => {
     const trimmed = rawCmd.trim();
@@ -144,7 +99,7 @@ export default function InteractiveTerminal() {
 
     if (lowerCmd === "clear") {
       setIsCleared(true);
-      setRevealedCodeCount(0);
+      setRevealedCount(0);
       setCommandOutputs([]);
       setInputVal("");
       return;
@@ -152,7 +107,7 @@ export default function InteractiveTerminal() {
 
     if (lowerCmd === "reset") {
       setIsCleared(false);
-      setRevealedCodeCount(codeLines.length);
+      setRevealedCount(techStackYamlLines.length);
       setCommandOutputs([]);
       setInputVal("");
       return;
@@ -163,24 +118,18 @@ export default function InteractiveTerminal() {
     switch (lowerCmd) {
       case "cat": {
         const file = args[0]?.toLowerCase();
-        if (!file || file === "profile.js" || file === "profile" || file === "profile.ts") {
+        if (
+          !file ||
+          file === "tech-stack.yml" ||
+          file === "tech-stack.yaml" ||
+          file === "stack.yml" ||
+          file === "profile.yml"
+        ) {
           outputElement = (
-            <div className="space-y-0.5 pt-1">
-              {codeLines.map((line, idx) => (
-                <div
-                  key={`cat-line-${idx}`}
-                  className={`font-mono text-xs sm:text-sm text-base-200 ${
-                    indentClasses[line.indent] ?? "pl-0"
-                  }`}
-                >
-                  {line.tokens.map((token, tokenIdx) => (
-                    <span
-                      key={`cat-token-${idx}-${tokenIdx}`}
-                      className={tokenClasses[token.type] ?? "text-base-200"}
-                    >
-                      {token.value}
-                    </span>
-                  ))}
+            <div className="space-y-0.5 pt-1 font-mono text-xs sm:text-sm">
+              {techStackYamlLines.map((line, idx) => (
+                <div key={`cat-line-${idx}`} className={line.color || "h-2"}>
+                  {line.text}
                 </div>
               ))}
             </div>
@@ -198,24 +147,28 @@ export default function InteractiveTerminal() {
       case "ls":
         outputElement = (
           <p className="text-xs sm:text-sm font-mono text-sky-300">
-            profile.js   projects/   skills/   resume.pdf
+            tech-stack.yml projects/ skills/ resume.json
           </p>
         );
         break;
 
       case "help":
         outputElement = (
-          <div className="space-y-1 text-xs sm:text-sm font-mono text-base-300">
-            <span className="text-accent font-semibold">Available commands (click or type):</span>
-            <div className="grid grid-cols-[120px_1fr] gap-x-2 gap-y-1.5 pt-1">
+          <div className="space-y-1.5 text-xs sm:text-sm font-mono text-base-300">
+            <span className="text-accent font-semibold">
+              Available commands:
+            </span>
+            <div className="grid grid-cols-[130px_1fr] gap-x-2 gap-y-1 pt-1">
               {[
-                { cmd: "cat profile.js", desc: "Display profile source code" },
-                { cmd: "resume", desc: "View & export ATS resume" },
-                { cmd: "bio", desc: "About me & core focus" },
-                { cmd: "projects", desc: "Highlighted work & repositories" },
-                { cmd: "skills", desc: "Tech stack & engineering toolbelt" },
-                { cmd: "contact", desc: "Email & social profiles" },
-                { cmd: "ls", desc: "List environment files" },
+                {
+                  cmd: "cat tech-stack.yml",
+                  desc: "Display stack specification",
+                },
+                { cmd: "projects", desc: "Highlighted engineering work" },
+                { cmd: "skills", desc: "Core technical capabilities" },
+                { cmd: "resume", desc: "Open ATS printable resume view" },
+                { cmd: "contact", desc: "Email and social profiles" },
+                { cmd: "ls", desc: "List workspace files" },
                 { cmd: "clear", desc: "Clear terminal buffer" },
               ].map(({ cmd, desc }) => (
                 <div key={cmd} className="contents">
@@ -226,7 +179,7 @@ export default function InteractiveTerminal() {
                   >
                     {cmd}
                   </button>
-                  <span className="text-base-300">{desc}</span>
+                  <span className="text-base-400">{desc}</span>
                 </div>
               ))}
             </div>
@@ -234,21 +187,38 @@ export default function InteractiveTerminal() {
         );
         break;
 
-      case "bio":
-      case "about":
+      case "skills":
+      case "stack":
         outputElement = (
-          <div className="space-y-1.5 text-xs sm:text-sm font-mono text-base-300">
+          <div className="space-y-1 text-xs sm:text-sm font-mono text-base-300">
+            <p className="text-accent font-semibold">Technical Toolbelt:</p>
             <p>
-              <span className="text-sky-300">developer</span>:{" "}
-              <span className="text-emerald-300">&quot;Vijay Krishna&quot;</span>
+              <span className="text-sky-300">languages</span>:{" "}
+              <span className="text-emerald-300">
+                [&quot;JavaScript (ES6+)&quot;, &quot;Python&quot;,
+                &quot;Bash&quot;, &quot;C++&quot;, &quot;SQL&quot;]
+              </span>
             </p>
             <p>
-              <span className="text-sky-300">location</span>:{" "}
-              <span className="text-emerald-300">&quot;{profileInfo.home}&quot;</span>
+              <span className="text-sky-300">genai</span>:{" "}
+              <span className="text-emerald-300">
+                [&quot;RAG Pipelines&quot;, &quot;ChromaDB&quot;, &quot;Gemini
+                API&quot;]
+              </span>
             </p>
             <p>
-              <span className="text-sky-300">mission</span>:{" "}
-              <span className="text-emerald-300">&quot;Hacking on GenAI pipelines, developer automation & modern frontends.&quot;</span>
+              <span className="text-sky-300">systems</span>:{" "}
+              <span className="text-emerald-300">
+                [&quot;Linux&quot;, &quot;systemd&quot;, &quot;Bash&quot;,
+                &quot;gdbus&quot;, &quot;Git&quot;]
+              </span>
+            </p>
+            <p>
+              <span className="text-sky-300">frontend</span>:{" "}
+              <span className="text-emerald-300">
+                [&quot;React&quot;, &quot;Tailwind CSS&quot;, &quot;Vite&quot;,
+                &quot;HTML5/CSS3&quot;]
+              </span>
             </p>
           </div>
         );
@@ -257,9 +227,9 @@ export default function InteractiveTerminal() {
       case "projects":
         outputElement = (
           <div className="space-y-1.5 text-xs sm:text-sm font-mono text-base-300">
-            <p className="text-accent font-semibold">Highlighted Projects:</p>
+            <p className="text-accent font-semibold">Featured Projects:</p>
             {projects.map((proj) => (
-              <p key={proj.name}>
+              <p key={proj.id || proj.name}>
                 • <span className="text-sky-300 font-medium">{proj.name}</span>:{" "}
                 <span className="text-base-400">{proj.description}</span>{" "}
                 {proj.link && (
@@ -288,39 +258,36 @@ export default function InteractiveTerminal() {
         );
         break;
 
-      case "skills":
-      case "stack":
-        outputElement = (
-          <div className="space-y-1 text-xs sm:text-sm font-mono text-base-300">
-            <p className="text-accent font-semibold">Technical Toolbelt:</p>
-            <p><span className="text-sky-300">languages</span>: <span className="text-emerald-300">[&quot;JavaScript&quot;, &quot;Python&quot;, &quot;Bash&quot;, &quot;HTML/CSS&quot;]</span></p>
-            <p><span className="text-sky-300">genai</span>: <span className="text-emerald-300">[&quot;RAG Pipelines&quot;, &quot;ChromaDB&quot;, &quot;Gemini API&quot;]</span></p>
-            <p><span className="text-sky-300">frontend</span>: <span className="text-emerald-300">[&quot;React&quot;, &quot;Tailwind CSS&quot;, &quot;Vite&quot;]</span></p>
-            <p><span className="text-sky-300">systems</span>: <span className="text-emerald-300">[&quot;Linux / GNOME&quot;, &quot;systemd&quot;, &quot;Git&quot;]</span></p>
-          </div>
-        );
-        break;
-
       case "contact":
         outputElement = (
           <div className="space-y-1 text-xs sm:text-sm font-mono text-base-300">
             <p className="text-accent font-semibold">Contact Channels:</p>
             <p>
               email:{" "}
-              <a href={profileLinks.email} className="text-emerald-300 underline hover:text-accent">
-                {profileInfo.email.replace("mailto:", "")}
-              </a>
+              <span className="text-emerald-300 font-mono">
+                {profileInfo.email}
+              </span>
             </p>
             <p>
               github:{" "}
-              <a href={profileLinks.github} target="_blank" rel="noreferrer" className="text-emerald-300 underline hover:text-accent">
+              <a
+                href={profileLinks.github}
+                target="_blank"
+                rel="noreferrer"
+                className="text-emerald-300 underline hover:text-accent"
+              >
                 {profileLinks.github.replace("https://", "")}
               </a>
             </p>
             <p>
               linkedin:{" "}
-              <a href={profileLinks.linkedin} target="_blank" rel="noreferrer" className="text-emerald-300 underline hover:text-accent">
-                {profileLinks.linkedin.replace("https://www.", "").replace("https://", "")}
+              <a
+                href={profileLinks.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="text-emerald-300 underline hover:text-accent"
+              >
+                {profileLinks.linkedin.replace("https://", "")}
               </a>
             </p>
           </div>
@@ -332,27 +299,24 @@ export default function InteractiveTerminal() {
         window.location.hash = "resume";
         outputElement = (
           <p className="text-xs sm:text-sm font-mono text-emerald-400">
-            Navigating to printable ATS resume view...
+            Navigating to ATS resume view...
           </p>
         );
         break;
 
       case "whoami":
-        outputElement = <p className="text-xs sm:text-sm font-mono text-emerald-400">guest@portfolio (Welcome! Feel free to poke around)</p>;
-        break;
-
-      case "sudo":
-        outputElement = <p className="text-xs sm:text-sm font-mono text-rose-400">Permission denied: Vijay is root user.</p>;
-        break;
-
-      case "echo":
-        outputElement = <p className="text-xs sm:text-sm font-mono text-base-200">{args.join(" ")}</p>;
+        outputElement = (
+          <p className="text-xs sm:text-sm font-mono text-emerald-400">
+            guest@portfolio (Welcome! Explore projects or type &apos;help&apos;)
+          </p>
+        );
         break;
 
       default:
         outputElement = (
           <p className="text-xs sm:text-sm font-mono text-rose-400">
-            Command not found: &apos;{trimmed}&apos;. Type <span className="text-accent">&apos;help&apos;</span>.
+            Command not found: &apos;{trimmed}&apos;. Type{" "}
+            <span className="text-accent">&apos;help&apos;</span>.
           </p>
         );
     }
@@ -371,7 +335,9 @@ export default function InteractiveTerminal() {
       e.preventDefault();
       if (commandHistory.length > 0) {
         const nextIndex =
-          historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
+          historyIndex === -1
+            ? commandHistory.length - 1
+            : Math.max(0, historyIndex - 1);
         setHistoryIndex(nextIndex);
         setInputVal(commandHistory[nextIndex]);
       }
@@ -391,8 +357,8 @@ export default function InteractiveTerminal() {
       e.preventDefault();
       const current = inputVal.toLowerCase().trim();
       if (!current) return;
-      if ("cat profile.js".startsWith(current)) {
-        setInputVal("cat profile.js");
+      if ("cat tech-stack.yml".startsWith(current)) {
+        setInputVal("cat tech-stack.yml");
         return;
       }
       const match = QUICK_COMMANDS.find((c) => c.startsWith(current));
@@ -404,10 +370,10 @@ export default function InteractiveTerminal() {
 
   return (
     <section
-      aria-labelledby="profile-terminal-title"
+      aria-label="Developer Interactive Terminal"
       className="group relative flex flex-col rounded-3xl border border-white/10 bg-base-900/85 shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-accent/30"
     >
-      {/* Window Header with Traffic Lights & Active File Indicator */}
+      {/* Window Header */}
       <div className="flex items-center justify-between border-b border-white/10 bg-base-900/90 px-5 py-3 rounded-t-3xl">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5" aria-hidden>
@@ -415,57 +381,46 @@ export default function InteractiveTerminal() {
             <span className="h-3 w-3 rounded-full bg-amber-300/80" />
             <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
           </div>
-          <p className="font-mono text-xs text-base-400">
-            vijay@fedora:~
-          </p>
+          <p className="font-mono text-xs text-base-400">vijay@fedora:~</p>
         </div>
 
-        <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-base-500">
+        <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-base-500 hidden sm:inline">
           zsh · interactive
         </span>
       </div>
 
-      {/* Unified Terminal Window Body */}
+      {/* Terminal Window Body */}
       <div
         ref={terminalScrollRef}
         onClick={() => inputRef.current?.focus()}
-        className="min-h-[340px] max-h-[440px] overflow-y-auto hide-scrollbar px-5 py-4 font-mono text-xs sm:text-sm leading-6 space-y-3 cursor-text"
+        className="min-h-[340px] max-h-[440px] overflow-y-auto overflow-x-hidden hide-scrollbar px-4 sm:px-5 py-4 font-mono text-xs sm:text-sm leading-6 space-y-3 cursor-text"
       >
-        <div id="profile-terminal-title" className="sr-only">
-          Developer Terminal with Profile and Live Command Input
-        </div>
-
-        {/* 1. Initial Prompt & Animated Profile Code */}
+        {/* Initial Prompt & Animated Stack YAML */}
         {!isCleared && (
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             <div className="text-base-400">
-              <span className="text-accent">❯</span> cat profile.js
+              <span className="text-accent font-semibold">❯</span> cat
+              tech-stack.yml
             </div>
             <div className="space-y-0.5 pt-0.5">
-              {codeLines.slice(0, revealedCodeCount).map((line, idx) => (
+              {techStackYamlLines.slice(0, revealedCount).map((line, idx) => (
                 <div
-                  key={`code-line-${idx}`}
-                  className={`font-mono text-xs sm:text-sm text-base-200 ${
-                    indentClasses[line.indent] ?? "pl-0"
-                  }`}
+                  key={`line-${idx}`}
+                  className={`${line.color || "h-2"} break-words`}
                 >
-                  {line.tokens.map((token, tokenIdx) => (
-                    <span
-                      key={`token-${idx}-${tokenIdx}`}
-                      className={tokenClasses[token.type] ?? "text-base-200"}
-                    >
-                      {token.value}
-                    </span>
-                  ))}
+                  {line.text}
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* 2. Interactive Command History Outputs */}
+        {/* Command History Outputs */}
         {commandOutputs.map((item, idx) => (
-          <div key={`cmd-output-${idx}`} className="space-y-1.5 pt-2 border-t border-white/5">
+          <div
+            key={`cmd-output-${idx}`}
+            className="space-y-1.5 pt-2 border-t border-white/5"
+          >
             <div className="flex items-center gap-2 text-base-100">
               <span className="text-accent font-semibold select-none">❯</span>
               <span className="font-semibold text-base-100">{item.cmd}</span>
@@ -476,7 +431,7 @@ export default function InteractiveTerminal() {
           </div>
         ))}
 
-        {/* 3. Live Active Input Line */}
+        {/* Live Active Input Line */}
         <div className="flex items-center gap-2 pt-2">
           <span className="text-accent font-semibold select-none">❯</span>
           <input
@@ -489,8 +444,8 @@ export default function InteractiveTerminal() {
             spellCheck={false}
             autoCapitalize="none"
             placeholder={
-              revealedCodeCount < codeLines.length && !isCleared
-                ? "Booting profile..."
+              revealedCount < techStackYamlLines.length && !isCleared
+                ? "Loading stack..."
                 : "Type 'help' (Tab to autocomplete)..."
             }
             className="flex-1 bg-transparent text-base-100 outline-none placeholder:text-base-600 font-mono text-xs sm:text-sm"
@@ -498,9 +453,11 @@ export default function InteractiveTerminal() {
         </div>
       </div>
 
-      {/* Quick Run Chips (Clean single-line bar with zero wasted space) */}
+      {/* Quick Run Chips Bar */}
       <div className="flex items-center gap-1.5 border-t border-white/5 bg-base-950/60 px-5 py-2.5 rounded-b-3xl text-xs font-mono overflow-x-auto hide-scrollbar">
-        <span className="text-base-500 mr-1 select-none flex-shrink-0">Quick:</span>
+        <span className="text-base-500 mr-1 select-none flex-shrink-0">
+          Quick:
+        </span>
         {QUICK_COMMANDS.map((cmd) => (
           <button
             key={cmd}
@@ -515,9 +472,6 @@ export default function InteractiveTerminal() {
             {cmd}
           </button>
         ))}
-        <span className="text-[11px] text-base-500 hidden sm:inline ml-auto select-none">
-          Tab ⇥ complete · ↑↓ history
-        </span>
       </div>
     </section>
   );

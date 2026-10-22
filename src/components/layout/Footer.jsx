@@ -6,7 +6,7 @@ export default function Footer({ socialLinks }) {
       <div className="flex flex-col sm:flex-row items-center gap-2 text-base-400 text-center sm:text-left">
         <span>© {new Date().getFullYear()} Vijay Krishna.</span>
         <span className="hidden sm:inline">·</span>
-        <span>Crafted with intentionality & code.</span>
+        <span>Software Developer · Khagaria, Bihar, India</span>
       </div>
 
       <div className="flex items-center gap-6">

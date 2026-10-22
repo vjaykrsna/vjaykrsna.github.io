@@ -1,20 +1,20 @@
 export const focusAreas = [
   {
-    title: "Frontend Craft",
+    title: "Applied AI & RAG",
     description:
-      "React builds, VanillaJS drills, and Tailwind/Tailwind-free styling sessions—keeping the fundamentals sharp.",
-    items: ["React", "Tailwind", "TypeScript", "Accessibility"],
+      "Engineering vector retrieval pipelines with ChromaDB, structured prompt validation, and context-aware LLM agents powered by Gemini API.",
+    items: ["RAG Pipelines", "ChromaDB", "Gemini API", "Python", "Node.js"],
   },
   {
-    title: "Automation & Tooling",
+    title: "Linux & System Automation",
     description:
-      "Shell scripts, dotfiles, and tiny utilities that remove friction (hello gsconnect-mount-manager).",
-    items: ["Bash", "Linux", "Termux", "YADM"],
+      "Building resilient systemd user daemons, zero-dependency gdbus hooks, and Bash scripts that automate desktop environments and remote workflows.",
+    items: ["Linux", "systemd", "Bash", "gdbus", "Git"],
   },
   {
-    title: "Applied AI",
+    title: "Frontend & UI Systems",
     description:
-      "Experimenting with Gemini, RAG pipelines, and practical LLM integrations that help real communities.",
-    items: ["Gemini", "RAG", "Node.js", "Python"],
+      "Crafting accessible, keyboard-navigable web applications with modern React, Tailwind CSS, and lean UI primitives without component bloat.",
+    items: ["React", "JavaScript (ES6+)", "Tailwind CSS", "Vite", "A11y"],
   },
 ];

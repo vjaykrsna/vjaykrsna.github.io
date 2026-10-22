@@ -17,6 +17,11 @@ export const resumeData = {
         username: "vjaykrsna",
         url: "https://linkedin.com/in/vjaykrsna",
       },
+      {
+        network: "X (Twitter)",
+        username: "vjaykrsna",
+        url: "https://x.com/vjaykrsna",
+      },
     ],
   },
   skills: [
@@ -26,7 +31,14 @@ export const resumeData = {
     },
     {
       category: "Web & Frameworks",
-      items: ["React", "Node.js", "Express.js", "Tailwind CSS", "HTML5/CSS3", "Vite"],
+      items: [
+        "React",
+        "Node.js",
+        "Express.js",
+        "Tailwind CSS",
+        "HTML5/CSS3",
+        "Vite",
+      ],
     },
     {
       category: "AI & Databases",
@@ -34,44 +46,50 @@ export const resumeData = {
     },
     {
       category: "Tools & Systems",
-      items: ["Git", "GitHub", "Linux (Fedora/GNOME)", "systemd", "REST APIs"],
+      items: ["Git", "GitHub", "Linux", "systemd", "gdbus", "REST APIs"],
     },
   ],
   projects: [
     {
       name: "LLM-Powered Telegram Bot for Community Support",
-      tech: ["Python", "Gemini 2.5 Flash", "ChromaDB", "RAG Pipeline"],
+      tech: ["Python", "Gemini API", "ChromaDB", "RAG Pipeline"],
       repo: "https://github.com/vjaykrsna/ragbot",
       bullets: [
         "Architected an AI-driven Telegram support bot using Gemini 2.5 Flash and ChromaDB vectors, resolving over 80% of recurring questions for a 10,000+ member learner community.",
         "Engineered an automated extraction and summarization pipeline that streams high-noise group chats into structured, context-aware knowledge bases with PII anonymization.",
+        "Implemented localized vector caching and chunking heuristics that lowered average query latency to sub-second responses.",
       ],
     },
     {
       name: "GSConnect Mount Manager",
-      tech: ["Bash", "systemd", "Linux", "GSConnect"],
+      tech: ["Bash", "systemd", "Linux", "gdbus"],
       repo: "https://github.com/vjaykrsna/gsconnect-mount-manager",
       bullets: [
         "Created a systemd user service that automates Android device mounting over GSConnect, syncing GNOME bookmarks and exposing clean filesystem directories for internal, SD, and USB-OTG storage.",
         "Built automated health-check and self-recovery routines with zero-dependency gdbus integration, eliminating manual mounting scripts.",
+        "Configured headless daemon monitoring and signal handling that guarantees reliable auto-remounts across system suspend and resume cycles.",
       ],
     },
     {
       name: "AI-Powered Recipe Generator (VJ's Chef)",
       tech: ["React", "Node.js", "Gemini API", "Tailwind CSS"],
-      link: "https://vjaykrsna.github.io/vjs-chef/",
       repo: "https://github.com/vjaykrsna/vjs-chef",
       bullets: [
         "Engineered a full-stack recipe explorer powered by Google Gemini API via a secured Node.js backend proxy with streaming markdown responses.",
         "Built modular UI primitives featuring keyboard navigation (roving tabindex), asynchronous state feedback, and accessible responsive styling.",
+        "Designed prompt templates with strict schema validation to ensure reproducible meal plans and structured ingredient categorization.",
       ],
     },
+  ],
+  experience: [
     {
-      name: "Consumer Inflation & Essentials Price Tracker",
-      tech: ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn"],
+      role: "Industrial Trainee",
+      company: "Mahle Anand Filter System Pvt. Ltd.",
+      location: "Chennai, TN",
+      timeframe: "Jan 2022 – June 2022",
       bullets: [
-        "Analyzed multi-year essential commodity pricing across Indian metropolitan centers; engineered a custom CPI-lite weighted index to track localized inflation trends.",
-        "Built automated data cleaning pipelines and city-wise visual dashboards revealing seasonal price spikes across staples (grains, dairy, cooking fuel).",
+        "Operated and monitored industrial injection moulding systems and performed baseline preventive maintenance.",
+        "Collaborated cross-functionally across plant shifts to adhere to high-precision manufacturing quality benchmarks.",
       ],
     },
   ],
@@ -96,18 +114,6 @@ export const resumeData = {
       location: "Begusarai, Bihar",
       timeframe: "2019",
       details: "Percentage: 69%",
-    },
-  ],
-  experience: [
-    {
-      role: "Industrial Trainee",
-      company: "Mahle Anand Filter System Pvt. Ltd.",
-      location: "Chennai, TN",
-      timeframe: "Jan 2022 – June 2022",
-      bullets: [
-        "Operated and monitored industrial injection moulding systems and performed baseline preventive maintenance.",
-        "Collaborated cross-functionally across plant shifts to adhere to high-precision manufacturing quality benchmarks.",
-      ],
     },
   ],
   certificates: [

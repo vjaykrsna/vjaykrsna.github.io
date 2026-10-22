@@ -10,6 +10,10 @@ export default function Header({ sections = [], activeSection = "top" }) {
   useEffect(() => {
     if (!isMenuOpen) return;
 
+    // Lock background scroll on mobile while drawer is active
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         setIsMenuOpen(false);
@@ -27,6 +31,7 @@ export default function Header({ sections = [], activeSection = "top" }) {
     document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
+      document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
@@ -102,7 +107,7 @@ export default function Header({ sections = [], activeSection = "top" }) {
             onClick={() => setIsMenuOpen((prev) => !prev)}
             className="inline-flex items-center justify-center rounded-full border border-white/10 bg-base-900 p-2 text-base-300 transition hover:text-base-100 hover:border-white/20 md:hidden"
             aria-expanded={isMenuOpen}
-            aria-controls="mobile-nav"
+            aria-controls={isMenuOpen ? "mobile-nav" : undefined}
             aria-label="Toggle navigation"
           >
             {isMenuOpen ? (
@@ -116,39 +121,50 @@ export default function Header({ sections = [], activeSection = "top" }) {
 
       {/* Mobile Drawer */}
       {isMenuOpen && (
-        <div
-          id="mobile-nav"
-          className="mt-2 overflow-hidden rounded-2xl border border-white/10 bg-base-950/95 p-4 shadow-2xl backdrop-blur-xl md:hidden pointer-events-auto animate-in fade-in slide-in-from-top-2"
-        >
-          <div className="flex flex-col gap-1.5 text-sm font-medium">
-            {navItems.map(({ id, label }) => {
-              const isActive = activeSection === id;
-              return (
-                <a
-                  key={`mobile-${id}`}
-                  href={`#${id}`}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`rounded-xl px-3.5 py-2 transition ${
-                    isActive
-                      ? "bg-white/10 text-accent font-semibold"
-                      : "text-base-300 hover:text-base-100 hover:bg-white/5"
-                  }`}
-                >
-                  {label}
-                </a>
-              );
-            })}
-            <a
-              href={profileLinks.resume}
-              target={profileLinks.resume.startsWith("#") ? undefined : "_blank"}
-              rel={profileLinks.resume.startsWith("#") ? undefined : "noreferrer"}
-              onClick={() => setIsMenuOpen(false)}
-              className="mt-2 text-center rounded-xl bg-accent py-2 text-xs font-semibold text-base-900 transition hover:bg-accent-hover"
-            >
-              View Resume
-            </a>
+        <>
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto md:hidden -z-10"
+            onClick={() => setIsMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            id="mobile-nav"
+            className="mt-2 overflow-hidden rounded-2xl border border-white/10 bg-base-950/95 p-4 shadow-2xl backdrop-blur-xl md:hidden pointer-events-auto animate-drawer-enter"
+          >
+            <div className="flex flex-col gap-1.5 text-sm font-medium">
+              {navItems.map(({ id, label }) => {
+                const isActive = activeSection === id;
+                return (
+                  <a
+                    key={`mobile-${id}`}
+                    href={`#${id}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`rounded-xl px-3.5 py-2 transition ${
+                      isActive
+                        ? "bg-white/10 text-accent font-semibold"
+                        : "text-base-300 hover:text-base-100 hover:bg-white/5"
+                    }`}
+                  >
+                    {label}
+                  </a>
+                );
+              })}
+              <a
+                href={profileLinks.resume}
+                target={
+                  profileLinks.resume.startsWith("#") ? undefined : "_blank"
+                }
+                rel={
+                  profileLinks.resume.startsWith("#") ? undefined : "noreferrer"
+                }
+                onClick={() => setIsMenuOpen(false)}
+                className="mt-2 text-center rounded-xl bg-accent py-2 text-xs font-semibold text-base-900 transition hover:bg-accent-hover"
+              >
+                View Resume
+              </a>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );

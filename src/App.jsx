@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import Header from "./components/layout/Header.jsx";
 import AccentAura from "./components/layout/AccentAura.jsx";
 import Hero from "./components/hero/Hero.jsx";
-import HighlightsStrip from "./components/highlights/HighlightsStrip.jsx";
 import PortfolioProjects from "./components/PortfolioProjects.jsx";
 import Timeline from "./components/common/Timeline.jsx";
 import FocusAreas from "./components/FocusAreas.jsx";
@@ -12,7 +11,6 @@ import SectionHeading from "./components/common/SectionHeading.jsx";
 import ResumeView from "./components/resume/ResumeView.jsx";
 import { profileLinks, socialLinks } from "./data/profile.js";
 import { sections } from "./data/sections.js";
-import { snapshotHighlights } from "./data/highlights.js";
 import { projects } from "./data/projects.js";
 import { experience } from "./data/experience.js";
 import { education } from "./data/education.js";
@@ -41,15 +39,24 @@ export default function App() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  const handleBackToPortfolio = () => {
-    window.location.hash = "";
+  const handleBackToPortfolio = useCallback(() => {
+    window.history.replaceState(null, "", window.location.pathname);
     setShowResume(false);
-  };
+  }, []);
 
   useEffect(() => {
+    if (showResume) return;
+
     const handleScroll = () => {
       if (window.scrollY < 120) {
         setActiveSection("top");
+      } else if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 60
+      ) {
+        if (sectionIds.length > 0) {
+          setActiveSection(sectionIds[sectionIds.length - 1]);
+        }
       }
     };
 
@@ -88,7 +95,7 @@ export default function App() {
       targets.forEach((el) => observer.unobserve(el));
       observer.disconnect();
     };
-  }, [sectionIds]);
+  }, [sectionIds, showResume]);
 
   if (showResume) {
     return <ResumeView onBack={handleBackToPortfolio} />;
@@ -102,14 +109,9 @@ export default function App() {
       <Header sections={sections} activeSection={activeSection} />
 
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-4 pt-16 pb-20 sm:px-6 sm:pt-20 lg:px-8">
-        <Hero
-          profileLinks={profileLinks}
-          socialLinks={socialLinks}
-        />
+        <Hero profileLinks={profileLinks} socialLinks={socialLinks} />
 
         <main className="mt-16 flex flex-1 flex-col gap-24 sm:gap-28">
-          <HighlightsStrip items={snapshotHighlights} />
-
           {sections.map((section) => {
             const SectionComponent = sectionComponents[section.id];
             if (!SectionComponent) {
@@ -117,7 +119,11 @@ export default function App() {
             }
 
             return (
-              <section key={section.id} id={section.id} className="space-y-8 sm:space-y-10 scroll-mt-28">
+              <section
+                key={section.id}
+                id={section.id}
+                className="space-y-8 sm:space-y-10 scroll-mt-28"
+              >
                 <SectionHeading {...section} />
                 {section.id === "projects" && (
                   <SectionComponent projects={projects} />

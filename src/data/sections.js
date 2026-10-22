@@ -8,35 +8,38 @@ import {
 export const sections = [
   {
     id: "projects",
-    title: "Recent Work",
-    heading: "Featured Projects & Experiments",
+    title: "Featured Projects",
+    heading: "Featured Engineering Work",
     navLabel: "Work",
     description:
-      "A running log of scrappy experiments—from AI helpers to shell scripts—that taught me something new.",
+      "Production-ready GenAI vector pipelines, Linux system automation, and responsive React applications.",
     icon: SparklesIcon,
   },
   {
     id: "experience",
     title: "Experience",
+    heading: "Professional Work History",
     navLabel: "Experience",
     description:
-      "Notes on the freelance gigs, collaborations, and self-driven work that shaped my approach.",
+      "Industrial engineering and preventive maintenance experience in precision manufacturing.",
     icon: BriefcaseIcon,
   },
   {
     id: "education",
     title: "Education",
+    heading: "Academic Foundation",
     navLabel: "Education",
     description:
-      "Degrees and programs that set the foundation for how I build and learn today.",
+      "Academic foundation in Information Technology and manufacturing engineering.",
     icon: AcademicCapIcon,
   },
   {
     id: "focus",
-    title: "What I'm Focusing On",
+    title: "Focus Areas",
+    heading: "Core Domains & Technical Tooling",
     navLabel: "Focus",
     description:
-      "Topics currently on my learning list—mostly frontend fundamentals and the tooling around them.",
+      "Core engineering domains, modern frameworks, and system tools currently guiding my work.",
     icon: ChartBarIcon,
   },
 ];

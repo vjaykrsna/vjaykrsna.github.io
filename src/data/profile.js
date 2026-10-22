@@ -8,7 +8,7 @@ import {
 
 export const profileLinks = {
   github: "https://github.com/vjaykrsna",
-  linkedin: "https://www.linkedin.com/in/vjaykrsna/",
+  linkedin: "https://linkedin.com/in/vjaykrsna",
   email: "mailto:vijay74684@gmail.com",
   resume: "#resume",
 };
@@ -38,13 +38,17 @@ export const socialLinks = [
     href: "https://x.com/vjaykrsna",
     icon: TwitterIcon,
   },
-  { id: "email", label: "Email", href: profileLinks.email, icon: MailIcon },
+  {
+    id: "email",
+    label: "Email",
+    href: profileLinks.email,
+    icon: MailIcon,
+  },
 ];
 
 export const profileInfo = {
-  alias: "vjaykrsna",
-  home: "Bihar",
-  modes: ["software developer", "GenAI tinkerer"],
-  shiplist: ["mini tools", "RAG bots", "frontend-for-fun"],
-  email: profileLinks.email,
+  name: "Vijay Krishna",
+  location: "Bihar, India",
+  role: "Software Developer",
+  email: "vijay74684@gmail.com",
 };

@@ -10,14 +10,22 @@ export default function SocialLink({
   const [copied, setCopied] = useState(false);
   const isMail = href ? href.startsWith("mailto:") : false;
   const isExternal = href ? href.startsWith("http") || isMail : false;
+  const emailAddress = isMail ? href.replace("mailto:", "") : "";
 
   const handleClick = (e) => {
     if (isMail) {
-      e.preventDefault();
-      const email = href.replace("mailto:", "");
-      navigator.clipboard?.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (navigator.clipboard?.writeText) {
+        e.preventDefault();
+        navigator.clipboard
+          .writeText(emailAddress)
+          .then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          })
+          .catch(() => {
+            window.location.href = href;
+          });
+      }
     }
   };
 
@@ -25,8 +33,16 @@ export default function SocialLink({
     href,
     target: isExternal && !isMail ? "_blank" : undefined,
     rel: isExternal && !isMail ? "noreferrer" : undefined,
-    "aria-label": isMail ? (copied ? "Email copied to clipboard" : `Email: ${label}`) : label,
-    title: isMail ? (copied ? "Copied to clipboard!" : "Click to copy email address") : undefined,
+    "aria-label": isMail
+      ? copied
+        ? "Email copied to clipboard"
+        : `Email: ${emailAddress}`
+      : label,
+    title: isMail
+      ? copied
+        ? "Copied to clipboard!"
+        : "Click to copy email address"
+      : undefined,
     onClick: isMail ? handleClick : undefined,
   };
 
@@ -63,7 +79,9 @@ export default function SocialLink({
     <a
       {...commonProps}
       className={`group inline-flex items-center gap-2 text-xs sm:text-sm transition ${
-        copied ? "text-emerald-400 font-medium" : "text-base-300 hover:text-accent"
+        copied
+          ? "text-emerald-400 font-medium"
+          : "text-base-300 hover:text-accent"
       }`}
     >
       {copied ? (

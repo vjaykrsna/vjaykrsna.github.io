@@ -5,9 +5,9 @@ import {
 } from "@heroicons/react/24/outline";
 
 const iconMap = {
-  "Applied AI": CpuChipIcon,
-  "Frontend Craft": PaintBrushIcon,
-  "Automation & Tooling": CommandLineIcon,
+  "Applied AI & RAG": CpuChipIcon,
+  "Linux & System Automation": CommandLineIcon,
+  "Frontend & UI Systems": PaintBrushIcon,
 };
 
 export default function FocusAreas({ areas }) {
@@ -25,7 +25,7 @@ export default function FocusAreas({ areas }) {
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-accent transition group-hover:scale-105 group-hover:border-accent/30">
                   <Icon className="h-5 w-5" />
                 </div>
-                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-300">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-300">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   Active Focus
                 </span>

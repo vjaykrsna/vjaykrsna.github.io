@@ -4,10 +4,6 @@
 
 :root {
   color-scheme: dark;
-  --bg-main: hsl(240 8% 7%);
-  --bg-surface: hsl(236 10% 9%);
-  --glow-warm: hsla(48, 96%, 53%, 0.16);
-  --glow-cool: hsla(172, 45%, 54%, 0.14);
 }
 
 html {
@@ -16,24 +12,33 @@ html {
 }
 
 body {
-  @apply bg-base-900 text-base-100 font-sans antialiased;
+  @apply bg-base-950 text-base-100 font-sans antialiased;
   overflow-x: clip;
-  background-color: var(--bg-main);
-  background-image:
-    radial-gradient(circle at 10% -5%, var(--glow-warm), transparent 42%),
-    radial-gradient(circle at 92% 12%, var(--glow-cool), transparent 38%),
-    linear-gradient(180deg, hsl(236 10% 9%) 0%, hsl(240 8% 7%) 42%, hsl(240 10% 6%) 100%);
 }
 
 #root {
   overflow-x: clip;
 }
 
-p,
-li,
-a,
-span {
-  overflow-wrap: anywhere;
+@keyframes drawerEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-drawer-enter {
+  animation: drawerEnter 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Prevent text overflow on code/links without breaking normal word boundaries */
+pre,
+code {
+  overflow-wrap: break-word;
 }
 
 ::selection {
@@ -51,20 +56,77 @@ span {
 }
 
 @media print {
-  @page {
-    size: letter;
-    margin: 0.45in;
-  }
-
+  :root,
+  html,
   body {
-    background: white !important;
+    color-scheme: light !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     background-image: none !important;
-    color: black !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
   }
 
-  * {
+  @page {
+    size: A4 portrait;
+    margin: 0.35in 0.45in;
+  }
+
+  /* Completely eliminate dark background, padding, and min-height from outer wrapper */
+  #root,
+  .resume-screen-wrapper {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  #resume-sheet {
+    background: #ffffff !important;
+    color: #111827 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #resume-sheet * {
+    color: #111827 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-}
 
+  #resume-sheet a {
+    color: #111827 !important;
+    text-decoration: none !important;
+  }
+
+  #resume-sheet h2 {
+    border-color: #111827 !important;
+  }
+}
